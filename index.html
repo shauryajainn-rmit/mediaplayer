@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Afterimage | Video art viewer</title>
+    <title>Video art Player</title>
     <!--
       DESIGN RATIONALE (context: VIDEO ART)
       Early-2000s desktop culture (screensavers, media players, net art) is a
@@ -30,8 +30,8 @@
     <header class="site-header">
       <div class="cd cd--hero" aria-hidden="true"></div>
       <div>
-        <h1>afterimage</h1>
-        <p class="tagline">A viewing room for video art</p>
+        <h1>video art viewer</h1>
+        <p class="tagline">n</p>
       </div>
     </header>
 
@@ -83,6 +83,15 @@
 
               <div class="custom-controls">
                 <button
+                  id="rewind-btn"
+                  class="skip-btn"
+                  type="button"
+                  aria-label="Skip back 10 seconds"
+                >
+                  ⏪ 10s
+                </button>
+
+                <button
                   id="play-pause-btn"
                   type="button"
                   aria-label="Play"
@@ -95,6 +104,15 @@
                     width="24"
                     height="24"
                   />
+                </button>
+
+                <button
+                  id="forward-btn"
+                  class="skip-btn"
+                  type="button"
+                  aria-label="Skip forward 10 seconds"
+                >
+                  10s ⏩
                 </button>
 
                 <span id="time-display">0:00 / 0:00</span>
@@ -131,6 +149,7 @@
                   value="1"
                   aria-label="Volume"
                 />
+                
               </div>
             </div>
           </div>
@@ -200,29 +219,6 @@
         </section>
       </div>
 
-      <!-- Additional Content Section -->
-      <section class="window about" aria-labelledby="about-title">
-        <div class="titlebar">
-          <h2 id="about-title" class="titlebar-text">About this work</h2>
-        </div>
-        <div class="window-body">
-          <div class="paper">
-            <p>
-              Add the title, artist and year of your chosen piece here, the way
-              a label sits beside a work on a gallery wall.
-            </p>
-            <h3>Keyboard shortcuts</h3>
-            <ul class="shortcuts">
-              <li><kbd>Space</kbd> Play or pause</li>
-              <li><kbd>&larr;</kbd> <kbd>&rarr;</kbd> Skip 5 seconds</li>
-              <li><kbd>M</kbd> Mute</li>
-              <li><kbd>F</kbd> Fullscreen</li>
-              <li><kbd>R</kbd> Reset the look</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-    </main>
 
     <!-- Footer Section -->
     <footer>

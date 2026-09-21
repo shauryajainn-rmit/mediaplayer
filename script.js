@@ -41,44 +41,6 @@ const PAUSE_ICON = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 function say(message) {
   statusEl.textContent = message;
 }
-/* ---------- Cursor ---------- */
-
-const clickableSelector = [
-  "a",
-  "button",
-  "input",
-  "select",
-  "textarea",
-  "summary",
-  "label",
-  "#custom-video-player",
-  "video",
-  "[role='button']",
-  "[role='link']",
-  "[tabindex]:not([tabindex='-1'])",
-  ".win-btn",
-  ".titlebar-btn",
-  ".progress-bar",
-  "#mute-btn",
-  "#play-pause-btn",
-  "#shuffle-btn",
-  "#fullscreen-btn",
-].join(", ");
-
-function setPressState(isActive) {
-  document.body.classList.toggle("is-pressing", isActive);
-}
-
-document.addEventListener("pointerdown", (event) => {
-  const target = event.target.closest(clickableSelector);
-  if (!target) return;
-  setPressState(true);
-});
-
-document.addEventListener("pointerup", () => setPressState(false));
-document.addEventListener("pointercancel", () => setPressState(false));
-document.addEventListener("pointerleave", () => setPressState(false));
-document.addEventListener("blur", () => setPressState(false));
 /* ---------- Play / pause ---------- */
 
 function togglePlayPause() {
@@ -141,6 +103,19 @@ function seekTo(seconds) {
   updateProgress();
 }
 
+function skipBy(seconds) {
+  if (!Number.isFinite(video.duration)) return;
+
+  const nextTime = Math.min(
+    Math.max(video.currentTime + seconds, 0),
+    video.duration
+  );
+
+  video.currentTime = nextTime;
+  updateProgress();
+  say(`Skipped ${Math.abs(seconds)} seconds ${seconds > 0 ? "ahead" : "back"}.`);
+}
+
 function seekFromPointer(e) {
   const rect = progress.getBoundingClientRect();
   const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
@@ -173,6 +148,9 @@ progress.addEventListener("keydown", (e) => {
     seekTo(video.duration);
   }
 });
+
+document.getElementById("rewind-btn").addEventListener("click", () => skipBy(-10));
+document.getElementById("forward-btn").addEventListener("click", () => skipBy(10));
 
 /* ---------- Volume and fullscreen ---------- */
 
@@ -327,6 +305,12 @@ document.addEventListener("keydown", (e) => {
       break;
     case "arrowright":
       seekTo(video.currentTime + 5);
+      break;
+    case "j":
+      skipBy(-10);
+      break;
+    case "l":
+      skipBy(10);
       break;
     case "m":
       toggleMute();

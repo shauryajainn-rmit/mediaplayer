@@ -15,7 +15,7 @@
   color-scheme: light;
   --shift: 0;
 
-  --face: #ece9d8;
+  --face: #fefefe;
   --face-hi: #fff;
   --face-shade: #aca899;
   --face-dark: #716f64;
@@ -29,8 +29,6 @@
   --highlight: hsl(calc(217 + var(--shift)) 62% 40%);
   --highlight-soft: hsl(calc(214 + var(--shift)) 65% 88%);
 
-  --cursor-default: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 0 0, auto;
-  --cursor-click: url("Interface-Essential-Cursor-Click-Point--Streamline-Pixel.svg") 6 6, pointer;
   --desktop-wallpaper: url("wallpaper.jpg");
 
   --font-ui: "VT323", "Courier New", monospace;
@@ -40,6 +38,8 @@
 html {
   background: hsl(calc(195 + var(--shift)) 40% 80%);
 }
+
+/* reset.css */
 
 body {
   min-height: 100vh;
@@ -102,42 +102,18 @@ h1 {
   color: var(--title-1);
 }
 
-/* ---------- CD (pure CSS, spins while playing) ---------- */
+/* cd playing */
 
 .cd {
   position: relative;
   flex: none;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: conic-gradient(
-    from 20deg,
-    #e9eef2,
-    #b8c4cf 8%,
-    #f7fbff 16%,
-    #c9b6e8 24%,
-    #9fd6e8 32%,
-    #f2f6f9 40%,
-    #9aa8b5 50%,
-    #eef3f7 58%,
-    #e6c8d8 66%,
-    #a9e0d0 74%,
-    #f4f8fb 82%,
-    #a5b2be 92%,
-    #e9eef2
-  );
-  -webkit-mask: radial-gradient(circle, transparent 0 9%, #000 9.5%);
-  mask: radial-gradient(circle, transparent 0 9%, #000 9.5%);
-  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.35));
+  background:
+    url("https://upload.wikimedia.org/wikipedia/commons/c/ca/CD-ROM.png") center center / cover no-repeat,
+    #dddddd00;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
   animation: cd-spin 2.4s linear infinite paused;
-}
-
-.cd::before {
-  content: "";
-  position: absolute;
-  inset: 27%;
-  border-radius: 50%;
-  border: 2px solid rgb(255 255 255 / 0.75);
-  background: linear-gradient(135deg, rgb(255 255 255 / 0.55), rgb(120 130 140 / 0.35));
 }
 
 .cd--hero {
@@ -293,7 +269,7 @@ nav a:focus-visible {
   outline: 2px solid #fff;
 }
 
-/* ---------- Player ---------- */
+/* video player */
 
 .stage {
   background: #000;
@@ -323,6 +299,21 @@ nav a:focus-visible {
   place-items: center;
   width: 44px;
   height: 44px;
+}
+
+.custom-controls .skip-btn {
+  width: 52px;
+  min-width: 52px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.custom-controls .skip-btn img {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 #time-display {
@@ -442,7 +433,7 @@ input[type="range"] {
   aspect-ratio: auto;
 }
 
-/* ---------- Lens window ---------- */
+/* windows */
 
 .hint {
   margin: 0 0 0.75rem;
@@ -489,7 +480,7 @@ legend {
   width: 100%;
 }
 
-/* ---------- Notepad-style wall text ---------- */
+/* videoplayer window */
 
 .about {
   max-width: 46rem;
@@ -559,34 +550,4 @@ footer a {
   .cd {
     animation: none;
   }
-}
-body {
-  cursor: var(--cursor-default);
-}
-
-button,
-a,
-input,
-select,
-textarea,
-summary,
-label,
-#custom-video-player,
-video,
-[role="button"],
-[role="link"],
-[tabindex]:not([tabindex="-1"]),
-.progress-bar,
-.titlebar-btn,
-.win-btn,
-#mute-btn,
-#play-pause-btn,
-#shuffle-btn,
-#fullscreen-btn {
-  cursor: var(--cursor-default);
-}
-
-body.is-pressing,
-body.is-pressing * {
-  cursor: var(--cursor-click) !important;
 }
