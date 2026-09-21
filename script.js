@@ -9,7 +9,8 @@
   would not. Shortcuts follow common video-player habits.
 
   SOURCES AND AI DISCLOSURE
-   References: MDN docs for HTMLMediaElement, Pointer Events, p5.js, 
+   References: MDN docs for HTMLMediaElement, Pointer Events, p5.js, playhtml.fun(for inspiration), 
+   w3schools, codepen.io
    Icons: Icons8. Fonts: Google Fonts
   Claude AI was partially used to fix code errors with suggestions.
 */
@@ -31,25 +32,9 @@ const PAUSE_ICON = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 
 
 
-
-
 function say(message) {
   statusEl.textContent = message;
 }
-const mouseCd = document.getElementById("mouse-cd");
-
-document.addEventListener("pointermove", (event) => {
-  mouseCd.style.left = `${event.clientX}px`;
-  mouseCd.style.top = `${event.clientY}px`;
-});
-
-document.addEventListener("pointerdown", () => {
-  document.body.classList.add("is-clicking");
-});
-
-document.addEventListener("pointerup", () => {
-  document.body.classList.remove("is-clicking");
-});
 
 /* play and pause buttons */
 
@@ -162,7 +147,7 @@ progress.addEventListener("keydown", (e) => {
 document.getElementById("rewind-btn").addEventListener("click", () => skipBy(-10));
 document.getElementById("forward-btn").addEventListener("click", () => skipBy(10));
 
-/* ---------- Volume and fullscreen ---------- */
+/* volume functionality */
 
 function syncVolumeUI() {
   const muted = video.muted || video.volume === 0;
@@ -213,49 +198,7 @@ fullscreenBtn.addEventListener("click", toggleFullscreen);
 document.addEventListener("fullscreenchange", onFullscreenChange);
 document.addEventListener("webkitfullscreenchange", onFullscreenChange);
 
-/* ---------- Dragging the player window ---------- */
-
-const dragHandle = document.querySelector(".titlebar");
-let dragState = null;
-
-function startDrag(event) {
-  if (event.target.closest("button, input, select, textarea, svg, a")) return;
-
-  dragState = {
-    offsetX: event.clientX - player.offsetLeft,
-    offsetY: event.clientY - player.offsetTop,
-  };
-
-  player.setPointerCapture?.(event.pointerId);
-}
-
-function moveDrag(event) {
-  if (!dragState) return;
-
-  const parent = player.parentElement;
-  const maxX = Math.max(0, parent.clientWidth - player.offsetWidth);
-  const maxY = Math.max(0, parent.clientHeight - player.offsetHeight);
-
-  const nextX = Math.min(Math.max(event.clientX - dragState.offsetX, 0), maxX);
-  const nextY = Math.min(Math.max(event.clientY - dragState.offsetY, 0), maxY);
-
-  player.style.position = "absolute";
-  player.style.left = `${nextX}px`;
-  player.style.top = `${nextY}px`;
-  player.style.zIndex = "10";
-}
-
-function stopDrag() {
-  dragState = null;
-}
-
-dragHandle.addEventListener("pointerdown", startDrag);
-document.addEventListener("pointermove", moveDrag);
-document.addEventListener("pointerup", stopDrag);
-
-dragHandle.addEventListener("pointerleave", stopDrag);
-
-/* I decided to implement keyboard shortcuts for the video player, making the website more user friendly */
+/* keyboard shortcuts were added for the video player, making the website more user friendly */
 
 document.addEventListener("keydown", (e) => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -299,6 +242,73 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
+
+/* for a more interactive and fun experience, I added a drag and drop feature
+ to the video player as if it was a real window on a windows xp desktop, sticking to
+ the theme.
+ https://www.w3schools.com/jsreF/event_ondrag.asp */
+
+function dragElement(handle, target) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  var moved = false;
+
+  handle.addEventListener("mousedown", dragMouseDown);
+  handle.addEventListener("touchstart", dragTouchStart);
+
+  function dragMouseDown(e) {
+    if (e.target.closest("button")) return; // leave the fullscreen button alone
+    if (target.classList.contains("is-fullscreen")) return;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    moved = false;
+    target.classList.add("is-dragging");
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function dragTouchStart(e) {
+    if (e.target.closest("button")) return;
+    if (target.classList.contains("is-fullscreen")) return;
+    var touch = e.touches[0];
+    pos3 = touch.clientX;
+    pos4 = touch.clientY;
+    moved = false;
+    target.classList.add("is-dragging");
+    document.ontouchend = closeDragElement;
+    document.ontouchmove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e.preventDefault();
+    moved = true;
+    if (e.type === "mousemove") {
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+    } else if (e.type === "touchmove") {
+      var touch = e.touches[0];
+      pos1 = pos3 - touch.clientX;
+      pos2 = pos4 - touch.clientY;
+      pos3 = touch.clientX;
+      pos4 = touch.clientY;
+    }
+    target.style.top = ((parseInt(target.style.top) || 0) - pos2) + "px";
+    target.style.left = ((parseInt(target.style.left) || 0) - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    target.classList.remove("is-dragging");
+    document.onmouseup = null;
+    document.onmousemove = null;
+    document.ontouchend = null;
+    document.ontouchmove = null;
+    if (moved) say("Window moved.");
+  }
+}
+
+dragElement(document.querySelector(".titlebar"), player);
 
 updateProgress();
 syncVolumeUI();

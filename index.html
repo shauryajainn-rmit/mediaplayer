@@ -3,26 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Video art Player</title>
-    <!--
-      DESIGN RATIONALE (context: VIDEO ART)
-      Early-2000s desktop culture (screensavers, media players, net art) is a
-      real visual vocabulary of video art, so I styled the viewer as a Windows
-      XP-era desktop: icy light-ray backdrop, beige beveled windows, pixel type
-      and a glossy title. A spinning CD doubles as the play-state indicator.
-      Hierarchy stays clear: wordmark > player window > Lens window > notes.
-      Visual inspiration: burn-cd.vercel.app (palette, window chrome, glossy
-      heading). I rebuilt everything in CSS and copied none of its images or
-      fonts.
+    <title>VideoPlayerXP</title>
+    <!-- DESIGN RATIONALE: I took inspiration from the Windows XP design, as I was looking for websites for inspiration that solely focused on video players, 
+     or had audio-visual content and I was drawn to the familiarity of the old Windows design (https://mitchivin.com) , which I thought
+      would be a fun and nostalgic theme for the website. I wanted to recreate the original website in a more colourful and visually happening way, 
+      so I added website elements like an animated CD which plays when the video plays, remindful of when physical media was used instead of digital,
+       and a drag and drop effect for the XP Video Player window, which I thought would be fun to add, as if it was an actual window on your desktop.
+       I also added a custom cursor, which I thought would add playful and witty character to the website. I chose the fonts VT323 and Roboto Mono, 
+       which are very reminiscent of the old XP design format.       to the overall y2k idea. Overall, I think the "retro = fun" idea makes 
+       any simple website, like this one, a lot more interesting to use.
+
+
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=VT323&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Instrument+Serif:ital@0;1&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
@@ -45,18 +39,17 @@
         <li><a href="#">Videos</a></li>
         <li><a href="#">Music</a></li>
         <li><a href="#">Playlists</a></li>
-        <!-- Add or remove navigation items as needed -->
       </ul>
     </nav>
 <div id="mouse-cd" aria-hidden="true"></div>
-    <!-- Main Content Section -->
+    <!-- menu -->
     <main class="container">
       <div class="viewer">
-        <!-- Media Player Section -->
+        <!-- video player -->
         <section class="window player-window" aria-labelledby="player-title">
           <div class="titlebar">
             <span class="cd cd--icon" aria-hidden="true"></span>
-            <h2 id="player-title" class="titlebar-text">Afterimage Player</h2>
+            <h2 id="player-title" class="titlebar-text">XP Video Player</h2>
             <button
               id="fullscreen-btn"
               class="titlebar-btn"
@@ -74,7 +67,7 @@
           <div class="window-body">
             <div class="media-player">
               <div class="stage">
-  <!-- Native "controls" removed so the custom bar below is the only interface -->
+
  <video id="custom-video-player" playsinline preload="metadata">
  <source
   src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4"
@@ -157,26 +150,25 @@
           </div>
 
           <!--
-            Feedback: the status bar announces every action to screen readers,
-            sliders show live values, the CD spins only while playing, and
-            pressed presets look sunken.
+            the status bar below is a text feedback for whatever is happening in the player, like pause, play and window was dragged.
           -->
           <p id="status" class="statusbar" role="status" aria-live="polite">
-            Ready. Press play or hit Space.
+            Ready? Press play or hit Space.
           </p>
         </section>
 
       </div>
 
 
-    <!-- Footer Section -->
+    <!-- footer -->
     <footer>
-      <p>&copy; 2026 Afterimage. All rights reserved.</p>
+      <p>&copy; 2026 Media Player Website. All rights reserved.</p>
       <p>
         <a href="https://icons8.com/icon/59862/play">Play</a> icon by
-        <a href="https://icons8.com">Icons8</a>
+        <a href="https://icons8.com">Icons8</a>,
         <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
-        <a href="https://icons8.com">Icons8</a>
+        <a href="https://icons8.com">Icons8</a>,
+        <a href="https://www.rw-designer.com/cursor-set/de-todo-un-poco-2-by-mei" title="Get free cursors for your web.">Cursor</a> from <a href="https://www.rw-designer.com/">RW Designer</a>
       </p>
     </footer>
   </body>
