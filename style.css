@@ -572,3 +572,11 @@ footer a {
     animation: none;
   }
 }
+
+* {
+  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, auto !important;
+}
+
+a, button, input[type="range"], .progress-bar, #custom-video-player {
+  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, pointer !important;
+}
