@@ -22,6 +22,7 @@
   --paper: #fff;
   --ink: #000;
   --ink-dim: #4d4d4d;
+  --slider-accent: #3f5a9a;
 
   --title-1: hsl(calc(226 + var(--shift)) 84% 23%);
   --title-2: hsl(calc(217 + var(--shift)) 62% 40%);
@@ -72,7 +73,7 @@ footer {
   margin-inline: auto;
 }
 
-/* ---------- Header ---------- */
+/* header */
 
 .site-header {
   display: flex;
@@ -83,26 +84,26 @@ footer {
 
 h1 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
   font-size: clamp(2.2rem, 7.5vw, 4.25rem);
   letter-spacing: 0.02em;
   line-height: 1;
   background: linear-gradient(180deg, #fff 0%, #d0e8ef 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px rgb(0 70 80 / 0.55);
+  -webkit-text-fill-color: rgba(0 0 0 / 0);
   filter: drop-shadow(0 0 8px rgb(0 70 60 / 0.7))
     drop-shadow(0 3px 6px rgb(0 0 0 / 0.25));
 }
-
 .tagline {
   margin-top: 0.4rem;
   color: var(--title-1);
 }
 
-/* cd playing */
+/* cd icon playing */
 
 .cd {
   position: relative;
@@ -134,6 +135,27 @@ h1 {
   }
 }
 
+/* https://p5js.org/examples/ and its VS extension was used as a reference to make a custom cursor which only appears when
+clicked and dragged */
+
+#mouse-cd {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/c/ca/CD-ROM.png") center center / cover no-repeat;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+body.is-clicking #mouse-cd {
+  opacity: 1;
+}
 /* ---------- Navigation ---------- */
 
 nav {
@@ -167,7 +189,7 @@ nav a:focus-visible {
   color: #fff;
 }
 
-/* ---------- Windows ---------- */
+/* the windows */
 
 .container {
   padding-block: 1.5rem 0.5rem;
@@ -187,6 +209,7 @@ nav a:focus-visible {
 }
 
 .window {
+  position: relative;
   overflow: hidden;
   background: var(--face);
   border: 1px solid var(--face-dark);
@@ -194,6 +217,10 @@ nav a:focus-visible {
   border-left-color: var(--face-hi);
   border-radius: 8px 8px 0 0;
   box-shadow: 2px 3px 10px rgb(0 0 0 / 0.3);
+}
+
+.player-window {
+  z-index: 1;
 }
 
 .titlebar {
@@ -206,6 +233,11 @@ nav a:focus-visible {
   text-shadow: 1px 1px 2px rgb(0 0 0 / 0.6);
   background: linear-gradient(180deg, var(--title-1) 0%, var(--title-2) 45%, var(--title-3) 100%);
   user-select: none;
+  cursor: grab;
+}
+
+.titlebar:active {
+  cursor: grabbing;
 }
 
 .titlebar-text {
@@ -371,7 +403,7 @@ nav a:focus-visible {
 }
 
 input[type="range"] {
-  accent-color: var(--highlight);
+  accent-color: var(--slider-accent);
 }
 
 .statusbar {

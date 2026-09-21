@@ -9,10 +9,9 @@
   would not. Shortcuts follow common video-player habits.
 
   SOURCES AND AI DISCLOSURE
-  AI assistance: code drafted with Claude (Anthropic); [add what you changed or
-  wrote yourself]. References: MDN docs for HTMLMediaElement, Pointer Events,
-  CSS filter() and conic-gradient(). Icons: Icons8. Fonts: Google Fonts
-  (Unbounded, VT323). Reset: Kevin Powell.
+   References: MDN docs for HTMLMediaElement, Pointer Events, p5.js, 
+   Icons: Icons8. Fonts: Google Fonts
+  Claude AI was partially used to fix code errors with suggestions.
 */
 
 const player = document.querySelector(".player-window");
@@ -26,10 +25,6 @@ const muteBtn = document.getElementById("mute-btn");
 const volume = document.getElementById("volume");
 const fullscreenBtn = document.getElementById("fullscreen-btn");
 const statusEl = document.getElementById("status");
-const sliders = document.querySelectorAll("[data-prop]");
-const presetBtns = document.querySelectorAll("[data-preset]");
-const shuffleBtn = document.getElementById("shuffle-btn");
-
 
 const PLAY_ICON = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
 const PAUSE_ICON = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
@@ -41,7 +36,22 @@ const PAUSE_ICON = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 function say(message) {
   statusEl.textContent = message;
 }
-/* ---------- Play / pause ---------- */
+const mouseCd = document.getElementById("mouse-cd");
+
+document.addEventListener("pointermove", (event) => {
+  mouseCd.style.left = `${event.clientX}px`;
+  mouseCd.style.top = `${event.clientY}px`;
+});
+
+document.addEventListener("pointerdown", () => {
+  document.body.classList.add("is-clicking");
+});
+
+document.addEventListener("pointerup", () => {
+  document.body.classList.remove("is-clicking");
+});
+
+/* play and pause buttons */
 
 function togglePlayPause() {
   if (video.paused || video.ended) {
@@ -72,7 +82,7 @@ video.addEventListener("ended", () => {
 });
 video.addEventListener("click", togglePlayPause);
 
-/* ---------- Progress and seeking ---------- */
+/* video player*/
 
 function fmt(seconds) {
   if (!Number.isFinite(seconds)) return "0:00";
@@ -203,88 +213,54 @@ fullscreenBtn.addEventListener("click", toggleFullscreen);
 document.addEventListener("fullscreenchange", onFullscreenChange);
 document.addEventListener("webkitfullscreenchange", onFullscreenChange);
 
-/* ---------- Extra feature: the Lens ---------- */
+/* ---------- Dragging the player window ---------- */
 
-const LOOKS = {
-  original: { hue: 0, saturate: 100, contrast: 100, blur: 0, invert: 0 },
-  negative: { hue: 0, saturate: 110, contrast: 110, blur: 0, invert: 100 },
-  heat: { hue: 320, saturate: 260, contrast: 130, blur: 0, invert: 0 },
-  dream: { hue: 30, saturate: 170, contrast: 90, blur: 3, invert: 0 },
-  noir: { hue: 0, saturate: 0, contrast: 170, blur: 0, invert: 0 },
-};
+const dragHandle = document.querySelector(".titlebar");
+let dragState = null;
 
-const FORMAT = {
-  hue: (v) => `${v}°`,
-  saturate: (v) => `${v}%`,
-  contrast: (v) => `${v}%`,
-  blur: (v) => `${v}px`,
-  invert: (v) => `${v}%`,
-};
+function startDrag(event) {
+  if (event.target.closest("button, input, select, textarea, svg, a")) return;
 
-let look = { ...LOOKS.original };
-
-function renderLook() {
-  video.style.filter =
-    `hue-rotate(${look.hue}deg) saturate(${look.saturate}%) ` +
-    `contrast(${look.contrast}%) blur(${look.blur}px) invert(${look.invert}%)`;
-  // The whole desktop theme follows the hue the viewer chose.
-  document.documentElement.style.setProperty("--shift", look.hue);
-  sliders.forEach((slider) => {
-    const prop = slider.dataset.prop;
-    slider.value = look[prop];
-    document.getElementById(`out-${prop}`).textContent = FORMAT[prop](look[prop]);
-  });
-}
-
-function markPreset(active) {
-  presetBtns.forEach((btn) =>
-    btn.setAttribute("aria-pressed", String(btn.dataset.preset === active))
-  );
-}
-
-function choosePreset(name) {
-  look = { ...LOOKS[name] };
-  renderLook();
-  markPreset(name);
-  say(`Look: ${name.charAt(0).toUpperCase()}${name.slice(1)}`);
-}
-
-presetBtns.forEach((btn) =>
-  btn.addEventListener("click", () => choosePreset(btn.dataset.preset))
-);
-
-sliders.forEach((slider) => {
-  slider.addEventListener("input", () => {
-    look[slider.dataset.prop] = Number(slider.value);
-    renderLook();
-    markPreset(null);
-  });
-  slider.addEventListener("change", () => say("Look: custom"));
-});
-
-const rand = (min, max) => Math.round(min + Math.random() * (max - min));
-
-function shuffleLook() {
-  look = {
-    hue: rand(0, 360),
-    saturate: rand(80, 260),
-    contrast: rand(80, 160),
-    blur: rand(0, 3),
-    invert: Math.random() < 0.2 ? 100 : 0,
+  dragState = {
+    offsetX: event.clientX - player.offsetLeft,
+    offsetY: event.clientY - player.offsetTop,
   };
-  renderLook();
-  markPreset(null);
-  say("Look: shuffled. Press Shuffle for another.");
-}
-shuffleBtn.addEventListener("click", shuffleLook);
 
-/* ---------- Keyboard shortcuts ---------- */
+  player.setPointerCapture?.(event.pointerId);
+}
+
+function moveDrag(event) {
+  if (!dragState) return;
+
+  const parent = player.parentElement;
+  const maxX = Math.max(0, parent.clientWidth - player.offsetWidth);
+  const maxY = Math.max(0, parent.clientHeight - player.offsetHeight);
+
+  const nextX = Math.min(Math.max(event.clientX - dragState.offsetX, 0), maxX);
+  const nextY = Math.min(Math.max(event.clientY - dragState.offsetY, 0), maxY);
+
+  player.style.position = "absolute";
+  player.style.left = `${nextX}px`;
+  player.style.top = `${nextY}px`;
+  player.style.zIndex = "10";
+}
+
+function stopDrag() {
+  dragState = null;
+}
+
+dragHandle.addEventListener("pointerdown", startDrag);
+document.addEventListener("pointermove", moveDrag);
+document.addEventListener("pointerup", stopDrag);
+
+dragHandle.addEventListener("pointerleave", stopDrag);
+
+/* I decided to implement keyboard shortcuts for the video player, making the website more user friendly */
 
 document.addEventListener("keydown", (e) => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   const target = e.target;
   const key = e.key.toLowerCase();
-  // Let buttons and sliders keep their own native keys.
   if (target.matches("select, textarea")) return;
   if ((key === " " || key === "enter") && target.matches("button, a")) return;
   if (
@@ -324,6 +300,5 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-renderLook();
 updateProgress();
 syncVolumeUI();
