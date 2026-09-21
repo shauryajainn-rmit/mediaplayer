@@ -12,7 +12,7 @@
   AI assistance: code drafted with Claude (Anthropic); [add what you changed or
   wrote yourself]. References: MDN docs for HTMLMediaElement, Pointer Events,
   CSS filter() and conic-gradient(). Icons: Icons8. Fonts: Google Fonts
-  (Unbounded, VT323).
+  (Unbounded, VT323). Reset: Kevin Powell.
 */
 
 const player = document.querySelector(".player-window");
@@ -33,6 +33,36 @@ const shuffleBtn = document.getElementById("shuffle-btn");
 const PLAY_ICON = "https://img.icons8.com/ios-glyphs/30/play--v1.png";
 const PAUSE_ICON = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 
+myButton.style.cursor = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Interface-Essential-Cursor--Streamline-Pixel" height="32" width="32">
+  <desc>
+    Interface Essential Cursor Streamline Icon: https://streamlinehq.com
+  </desc>
+  <title>interface-essential-cursor</title>
+  <g>
+    <path d="m17.52 19.805 0 3.05 1.53 0 0 -1.52 6.09 0 0 -3.05 -1.52 0 0 1.52 -6.1 0z" fill="#000000" stroke-width="1"></path>
+    <path d="M22.09 16.755h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M20.57 25.905h1.52v3.04h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M20.57 15.235h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.05 22.855h1.52v3.05h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.05 13.715h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M17.52 28.945h3.05v1.53h-3.05Z" fill="#000000" stroke-width="1"></path>
+    <path d="M17.52 12.185h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M16 25.905h1.52v3.04H16Z" fill="#000000" stroke-width="1"></path>
+    <path d="M16 10.665h1.52v1.52H16Z" fill="#000000" stroke-width="1"></path>
+    <path d="M14.47 22.855H16v3.05h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M14.47 9.135H16v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.95 21.335h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.95 7.615h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M11.43 22.855h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M11.43 6.095h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.9 24.375h1.53v1.53H9.9Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.9 4.565h1.53v1.53H9.9Z" fill="#000000" stroke-width="1"></path>
+    <path d="m6.86 1.525 0 25.9 3.04 0 0 -1.52 -1.52 0 0 -21.34 1.52 0 0 -1.52 -1.52 0 0 -1.52 -1.52 0z" fill="#000000" stroke-width="1"></path>
+  </g>
+</svg>
+
+
+
 function say(message) {
   statusEl.textContent = message;
 }
@@ -51,7 +81,7 @@ function setPlayIcon(playing) {
   playImg.src = playing ? PAUSE_ICON : PLAY_ICON;
   playImg.alt = playing ? "Pause" : "Play";
   playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
-  document.body.classList.toggle("is-playing", playing); // CSS spins the CD
+  document.body.classList.toggle("is-playing", playing);
 }
 
 video.addEventListener("play", () => {
@@ -66,9 +96,6 @@ video.addEventListener("ended", () => {
   setPlayIcon(false);
   say("Finished. Press play to watch again.");
 });
-video.addEventListener("error", () =>
-  say("The video could not be loaded. Check your connection and reload.")
-);
 video.addEventListener("click", togglePlayPause);
 
 /* ---------- Progress and seeking ---------- */
@@ -171,7 +198,7 @@ function toggleFullscreen() {
   if (request) {
     request.call(player);
   } else if (video.webkitEnterFullscreen) {
-    video.webkitEnterFullscreen(); // iPhone Safari only fullscreens the video itself
+    video.webkitEnterFullscreen();
   }
 }
 

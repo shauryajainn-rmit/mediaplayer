@@ -5,11 +5,14 @@
   relying on colour alone. Everything themed hangs off --shift (set from the
   Lens hue), so one number recolours titlebars, progress blocks and rays.
   Layout: single column on phones; player and Lens side by side from 60rem.
-  Usability: 44px transport targets, visible focus, reduced motion stops the
-  CD spinning, and VT323 is kept at 20px so the pixel type stays legible.
+  Usability: 44px transport targets, visible focus, and reduced motion stops
+  the CD spinning. reset.css (Kevin Powell) is kept as supplied; here I lift
+  its 75ch paragraph cap for the status bar and pin color-scheme to light so
+  the XP palette never flips in dark mode.
 */
 
 :root {
+  color-scheme: light;
   --shift: 0;
 
   --face: #ece9d8;
@@ -345,7 +348,6 @@ nav a:focus-visible {
   border-color: var(--face-dark) var(--face-hi) var(--face-hi) var(--face-dark);
 }
 
-/* Sunken trough with XP-style segmented blocks */
 .progress-bar {
   position: relative;
   flex: 1;
@@ -358,7 +360,6 @@ nav a:focus-visible {
   border-color: var(--face-dark) var(--face-hi) var(--face-hi) var(--face-dark);
 }
 
-/* Invisible extra hit area so the thin bar is easy to grab. */
 .progress-bar::after {
   content: "";
   position: absolute;
@@ -395,6 +396,7 @@ input[type="range"] {
 }
 
 .statusbar {
+  max-width: none;
   min-height: 2rem;
   margin: 0 8px 8px;
   padding: 0.15rem 0.6rem;
