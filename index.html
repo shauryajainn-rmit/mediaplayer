@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Afterimage | Video art viewer</title>
+    <!--
+      DESIGN RATIONALE (context: VIDEO ART)
+      Early-2000s desktop culture (screensavers, media players, net art) is a
+      real visual vocabulary of video art, so I styled the viewer as a Windows
+      XP-era desktop: icy light-ray backdrop, beige beveled windows, pixel type
+      and a glossy title. A spinning CD doubles as the play-state indicator.
+      Hierarchy stays clear: wordmark > player window > Lens window > notes.
+      Visual inspiration: burn-cd.vercel.app (palette, window chrome, glossy
+      heading). I rebuilt everything in CSS and copied none of its images or
+      fonts.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="site-header">
+      <div class="cd cd--hero" aria-hidden="true"></div>
+      <div>
+        <h1>afterimage</h1>
+        <p class="tagline">A viewing room for video art</p>
+      </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Videos</a></li>
+        <li><a href="#">Music</a></li>
+        <li><a href="#">Playlists</a></li>
+        <!-- Add or remove navigation items as needed -->
+      </ul>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main class="container">
+      <div class="viewer">
+        <!-- Media Player Section -->
+        <section class="window player-window" aria-labelledby="player-title">
+          <div class="titlebar">
+            <span class="cd cd--icon" aria-hidden="true"></span>
+            <h2 id="player-title" class="titlebar-text">Afterimage Player</h2>
+            <button
+              id="fullscreen-btn"
+              class="titlebar-btn"
+              type="button"
+              aria-label="Fullscreen"
+              aria-pressed="false"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                <rect x="1.5" y="1.5" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M1.5 3h11" stroke="currentColor" stroke-width="3" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="window-body">
+            <div class="media-player">
+              <div class="stage">
+                <!-- Native "controls" removed so the custom bar below is the only interface -->
+                <video id="custom-video-player" playsinline preload="metadata">
+                  <source
+                    src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div class="custom-controls">
+                <button
+                  id="play-pause-btn"
+                  type="button"
+                  aria-label="Play"
+                  onclick="togglePlayPause()"
+                >
+                  <img
+                    id="play-pause-img"
+                    src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
+                    alt="Play"
+                    width="24"
+                    height="24"
+                  />
+                </button>
+
+                <span id="time-display">0:00 / 0:00</span>
+
+                <div
+                  class="progress-bar"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Seek"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                >
+                  <span id="progress-bar-fill"></span>
+                </div>
+
+                <button id="mute-btn" type="button" aria-label="Mute" aria-pressed="false">
+                  <svg class="icon-volume" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M3 9v6h4l5 5V4L7 9H3z" />
+                    <path d="M16.5 12a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z" />
+                  </svg>
+                  <svg class="icon-muted" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M3 9v6h4l5 5V4L7 9H3z" />
+                    <path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+
+                <input
+                  id="volume"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value="1"
+                  aria-label="Volume"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!--
+            Feedback: the status bar announces every action to screen readers,
+            sliders show live values, the CD spins only while playing, and
+            pressed presets look sunken.
+          -->
+          <p id="status" class="statusbar" role="status" aria-live="polite">
+            Ready. Press play or hit Space.
+          </p>
+        </section>
+
+        <!--
+          EXTRA FEATURE: the Lens window (think XP's Display Properties).
+          Viewers bend the picture (hue, saturation, contrast, blur, invert)
+          while it plays. The hue also re-colours the whole desktop, echoing
+          XP's Blue / Olive / Silver colour schemes.
+        -->
+        <section class="window lens" aria-labelledby="lens-title">
+          <div class="titlebar">
+            <h2 id="lens-title" class="titlebar-text">Lens</h2>
+          </div>
+          <div class="window-body">
+            <p class="hint">Change how the work looks while it plays.</p>
+
+            <fieldset class="presets">
+              <legend>Look</legend>
+              <button type="button" class="win-btn" data-preset="original" aria-pressed="true">Original</button>
+              <button type="button" class="win-btn" data-preset="negative" aria-pressed="false">Negative</button>
+              <button type="button" class="win-btn" data-preset="heat" aria-pressed="false">Heat</button>
+              <button type="button" class="win-btn" data-preset="dream" aria-pressed="false">Dream</button>
+              <button type="button" class="win-btn" data-preset="noir" aria-pressed="false">Noir</button>
+              <button type="button" class="win-btn" id="shuffle-btn">Shuffle</button>
+            </fieldset>
+
+            <fieldset class="adjust">
+              <legend>Adjust</legend>
+              <div class="control">
+                <label for="lens-hue">Hue</label>
+                <output id="out-hue" for="lens-hue">0°</output>
+                <input id="lens-hue" data-prop="hue" type="range" min="0" max="360" step="1" value="0" />
+              </div>
+              <div class="control">
+                <label for="lens-saturate">Saturation</label>
+                <output id="out-saturate" for="lens-saturate">100%</output>
+                <input id="lens-saturate" data-prop="saturate" type="range" min="0" max="300" step="5" value="100" />
+              </div>
+              <div class="control">
+                <label for="lens-contrast">Contrast</label>
+                <output id="out-contrast" for="lens-contrast">100%</output>
+                <input id="lens-contrast" data-prop="contrast" type="range" min="50" max="200" step="5" value="100" />
+              </div>
+              <div class="control">
+                <label for="lens-blur">Blur</label>
+                <output id="out-blur" for="lens-blur">0px</output>
+                <input id="lens-blur" data-prop="blur" type="range" min="0" max="12" step="0.5" value="0" />
+              </div>
+              <div class="control">
+                <label for="lens-invert">Invert</label>
+                <output id="out-invert" for="lens-invert">0%</output>
+                <input id="lens-invert" data-prop="invert" type="range" min="0" max="100" step="5" value="0" />
+              </div>
+            </fieldset>
+          </div>
+        </section>
+      </div>
+
+      <!-- Additional Content Section -->
+      <section class="window about" aria-labelledby="about-title">
+        <div class="titlebar">
+          <h2 id="about-title" class="titlebar-text">About this work</h2>
+        </div>
+        <div class="window-body">
+          <div class="paper">
+            <p>
+              Add the title, artist and year of your chosen piece here, the way
+              a label sits beside a work on a gallery wall.
+            </p>
+            <h3>Keyboard shortcuts</h3>
+            <ul class="shortcuts">
+              <li><kbd>Space</kbd> Play or pause</li>
+              <li><kbd>&larr;</kbd> <kbd>&rarr;</kbd> Skip 5 seconds</li>
+              <li><kbd>M</kbd> Mute</li>
+              <li><kbd>F</kbd> Fullscreen</li>
+              <li><kbd>R</kbd> Reset the look</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2026 Afterimage. All rights reserved.</p>
+      <p>
+        <a href="https://icons8.com/icon/59862/play">Play</a> icon by
+        <a href="https://icons8.com">Icons8</a>
+        <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
+        <a href="https://icons8.com">Icons8</a>
+      </p>
+    </footer>
+  </body>
+</html>
