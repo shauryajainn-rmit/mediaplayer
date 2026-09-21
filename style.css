@@ -29,6 +29,9 @@
   --highlight: hsl(calc(217 + var(--shift)) 62% 40%);
   --highlight-soft: hsl(calc(214 + var(--shift)) 65% 88%);
 
+  --cursor-default: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, auto;
+  --cursor-click: url("Interface-Essential-Cursor-Click-Point--Streamline-Pixel.svg") 7 2, auto;
+
   --font-ui: "VT323", "Courier New", monospace;
   --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
 }
@@ -573,7 +576,7 @@ footer a {
   }
 }
 body {
-  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, auto;
+  cursor: var(--cursor-default);
 }
 
 button,
@@ -583,22 +586,37 @@ select,
 textarea,
 summary,
 label,
-#custom-video-player,
-video,
 [role="button"],
 [role="link"],
 [tabindex]:not([tabindex="-1"]),
-.progress-bar,
-.titlebar-btn,
-.win-btn,
+#custom-video-player,
 #mute-btn,
 #play-pause-btn,
+#fullscreen-btn,
 #shuffle-btn,
-#fullscreen-btn {
-  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, pointer;
+.win-btn,
+.titlebar-btn,
+.progress-bar {
+  cursor: var(--cursor-default);
 }
 
-.is-clickable.is-pressed,
-.is-clickable.is-pressed * {
-  cursor: url("Interface-Essential-Cursor-Click-Point--Streamline-Pixel.svg") 7 2, pointer !important;
+body.is-pressing button,
+body.is-pressing a,
+body.is-pressing input,
+body.is-pressing select,
+body.is-pressing textarea,
+body.is-pressing summary,
+body.is-pressing label,
+body.is-pressing [role="button"],
+body.is-pressing [role="link"],
+body.is-pressing [tabindex]:not([tabindex="-1"]),
+body.is-pressing #custom-video-player,
+body.is-pressing #mute-btn,
+body.is-pressing #play-pause-btn,
+body.is-pressing #fullscreen-btn,
+body.is-pressing #shuffle-btn,
+body.is-pressing .win-btn,
+body.is-pressing .titlebar-btn,
+body.is-pressing .progress-bar {
+  cursor: var(--cursor-click) !important;
 }

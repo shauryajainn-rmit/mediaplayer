@@ -65,26 +65,20 @@ const clickableSelector = [
   "#fullscreen-btn",
 ].join(", ");
 
-function clearPressedCursors() {
-  document.querySelectorAll(".is-clickable.is-pressed").forEach((el) => {
-    el.classList.remove("is-pressed");
-  });
+function setPressState(isActive) {
+  document.body.classList.toggle("is-pressing", isActive);
 }
-
-document.querySelectorAll(clickableSelector).forEach((el) => {
-  el.classList.add("is-clickable");
-});
 
 document.addEventListener("pointerdown", (event) => {
   const target = event.target.closest(clickableSelector);
   if (!target) return;
-  clearPressedCursors();
-  target.classList.add("is-pressed");
+  setPressState(true);
 });
 
-document.addEventListener("pointerup", clearPressedCursors);
-document.addEventListener("pointercancel", clearPressedCursors);
-document.addEventListener("pointerleave", clearPressedCursors);
+document.addEventListener("pointerup", () => setPressState(false));
+document.addEventListener("pointercancel", () => setPressState(false));
+document.addEventListener("pointerleave", () => setPressState(false));
+document.addEventListener("blur", () => setPressState(false));
 /* ---------- Play / pause ---------- */
 
 function togglePlayPause() {
