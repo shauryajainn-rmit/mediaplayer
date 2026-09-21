@@ -20,12 +20,8 @@
 
   --desktop-wallpaper: url("wallpaper.jpg");
 
-  --font-ui: "VT323", "Courier New", monospace;
+  --font-ui: "Times New Roman" , monospace;
   --font-display: "Roboto Mono", "Arial Black", system-ui, sans-serif;
-}
-
-html {
-  background: hsl(calc(195 + var(--shift)) 40% 80%);
 }
 
 /* reset.css */
@@ -555,7 +551,7 @@ footer a {
   text-decoration: underline;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) 
   * {
     transition: none !important;
   }
