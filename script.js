@@ -43,21 +43,48 @@ function say(message) {
 }
 /* ---------- Cursor ---------- */
 
-document.addEventListener("pointerdown", () => {
-  document.body.classList.add("is-clicking");
+const clickableSelector = [
+  "a",
+  "button",
+  "input",
+  "select",
+  "textarea",
+  "summary",
+  "label",
+  "#custom-video-player",
+  "video",
+  "[role='button']",
+  "[role='link']",
+  "[tabindex]:not([tabindex='-1'])",
+  ".win-btn",
+  ".titlebar-btn",
+  ".progress-bar",
+  "#mute-btn",
+  "#play-pause-btn",
+  "#shuffle-btn",
+  "#fullscreen-btn",
+].join(", ");
+
+function clearPressedCursors() {
+  document.querySelectorAll(".is-clickable.is-pressed").forEach((el) => {
+    el.classList.remove("is-pressed");
+  });
+}
+
+document.querySelectorAll(clickableSelector).forEach((el) => {
+  el.classList.add("is-clickable");
 });
 
-document.addEventListener("pointerup", () => {
-  document.body.classList.remove("is-clicking");
+document.addEventListener("pointerdown", (event) => {
+  const target = event.target.closest(clickableSelector);
+  if (!target) return;
+  clearPressedCursors();
+  target.classList.add("is-pressed");
 });
 
-document.addEventListener("pointercancel", () => {
-  document.body.classList.remove("is-clicking");
-});
-
-document.addEventListener("pointerleave", () => {
-  document.body.classList.remove("is-clicking");
-});
+document.addEventListener("pointerup", clearPressedCursors);
+document.addEventListener("pointercancel", clearPressedCursors);
+document.addEventListener("pointerleave", clearPressedCursors);
 /* ---------- Play / pause ---------- */
 
 function togglePlayPause() {

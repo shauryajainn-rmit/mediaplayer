@@ -578,21 +578,27 @@ body {
 
 button,
 a,
-input[type="range"],
-.progress-bar,
+input,
+select,
+textarea,
+summary,
+label,
 #custom-video-player,
 video,
-svg,
-[role="button"] {
+[role="button"],
+[role="link"],
+[tabindex]:not([tabindex="-1"]),
+.progress-bar,
+.titlebar-btn,
+.win-btn,
+#mute-btn,
+#play-pause-btn,
+#shuffle-btn,
+#fullscreen-btn {
   cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, pointer;
 }
 
-body.is-clicking,
-body.is-clicking *,
-body.is-clicking button,
-body.is-clicking a,
-body.is-clicking input[type="range"],
-body.is-clicking .progress-bar,
-body.is-clicking #custom-video-player {
+.is-clickable.is-pressed,
+.is-clickable.is-pressed * {
   cursor: url("Interface-Essential-Cursor-Click-Point--Streamline-Pixel.svg") 7 2, pointer !important;
 }
