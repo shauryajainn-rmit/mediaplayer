@@ -1,19 +1,3 @@
-/*
-  BEHAVIOUR NOTES
-  The partial code only had a play button, so I completed the player: the icon
-  and the spinning CD follow the video's real play/pause/ended events, so
-  clicking the picture, pressing Space or clicking the button never disagree.
-  I added a draggable, keyboard-accessible seek bar, a time read-out, volume
-  and mute, and fullscreen (the window's maximise button). The Lens applies CSS
-  filters to the <video>, which works with cross-origin files where a canvas
-  would not. Shortcuts follow common video-player habits.
-
-  SOURCES AND AI DISCLOSURE
-   References: MDN docs for HTMLMediaElement, Pointer Events, p5.js, playhtml.fun(for inspiration), 
-   w3schools, codepen.io
-   Icons: Icons8. Fonts: Google Fonts
-  Claude AI was partially used to fix code errors with suggestions.
-*/
 
 const player = document.querySelector(".player-window");
 const video = document.getElementById("custom-video-player");
@@ -237,9 +221,7 @@ document.addEventListener("keydown", (e) => {
     case "f":
       toggleFullscreen();
       break;
-    case "r":
-      choosePreset("original");
-      break;
+  
   }
 });
 

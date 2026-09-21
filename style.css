@@ -96,7 +96,7 @@ h1 {
   aspect-ratio: 1;
   border-radius: 50%;
   background:
-    url("https://upload.wikimedia.org/wikipedia/commons/c/ca/CD-ROM.png") center center / cover no-repeat,
+    url("https://upload.wikimedia.org/wikipedia/commons/f/ff/Audio_Compact_Disc.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original") center center / cover no-repeat,
     #dddddd00;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
   animation: cd-spin 2.4s linear infinite paused;
@@ -120,7 +120,7 @@ h1 {
   }
 }
 
-/* https://p5js.org/examples/  
+/* https://p5js.org/examples/ */
 
 /* ---------- Navigation ---------- */
 
@@ -551,7 +551,7 @@ footer a {
   text-decoration: underline;
 }
 
-@media (prefers-reduced-motion: reduce) 
+@media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
   }
@@ -559,6 +559,11 @@ footer a {
   .cd {
     animation: none;
   }
+
+  body {
+    animation: none;
+  }
+}
 
 @keyframes rwdcur57673 {
 0%,12.4%,100% {cursor:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADmklEQVRYhe2W309bZRjHPz0/KC2Ulq2AICu0XYAxIBEuvBHnEmJixFgl/gp6s+iIN/4BgC5kuNtFk0WxhpvZLGYx0XCxC5MtYyYmJmM/gI1NBlvZYJZCgcNpew6lx4sWLQOGyLarfm7evO/75Pk+3/c975NjAn4BeoAhniHffN3nAsIC0Aj8mB6fJV1AjQmYAsqBceA9nvJJpJ13AS8D7UJ6fRrIBY49DdGe7l5fT3evLz09CfQBNwAEUo5fB/YBb+40eWuLr7G1xde3TZgT+Kqnu7eGlHs/cPrTzzqGpP8juhN6uns/Bg4Bx4/1do+ll5vW9qXdJG9t8XWmk4UfE+ZPjxc329xQwDtvfFADBLbKdnbgTFPGtI3U6/kuM+ZI+yc+gP6A/2f+dRvcLJ8pQ9gFnDQZIkUzB74s2VfUJQrC2wDJpIEW009Ewgs/hcpG/MAgcBoYOztwJvqIeGO6sMn+gP/7rYysIWa4PlIY8Yy6LXXxqlrvDw31dQfqa+vY7/XirnAjS3KzKSl2JB7kfJGUV2vNBcIpQRBM129cPZ/pvO39t847Cu3N94MPBl5oaHJdGR4a21IdkNLOP3JE3Bx68ZXPi0r2Ois9LgRBYDWRxEgaaKqOx1NJYd5eLHKefyFeQsQ6SVid6ST1Va/DZrMNAr8BNdudgETqiThzYnmUlz/v9NS5EKVUezAM0JZ0ZmYf8vvFP6ivasC7v5I741Baa2VkQluXLOPOw/0BfxB4rPu1ArDGnEcPv9qMvcDOSjRB3Eigo2M25aKqKrGEyodH32Vq9CGLIRV7voOJX2eZFZY2CPQH/DvqpFJp6XNte8xlxBSNFS1BdDnK3el7RLUo1RXVWHItFBeWMH7lLrpisDgbxTAMRFHEEapo34nYpgVout5pLbQSuj1PabECYh7FxUXkm22MjtxkaVGhYE8++bIDJawR06OYLTJ5NiuEdisPkrKktE8mbwcKTCozwRLkHAlRFghp81TVeZHMImokzv3rc6ixZZLGKspynPnFuRP8hzveDnH45rVht8tzbXVBrrIYNruuJGVlLo4SiRGaWGT6VpipP2eIx+KIOQKSKGOYV8KTd+59e+py1/BuC/inEV04d+mlW5eDAW1p1RUfEzcE5shmHM581OK/sNpzB90HyzoOv9a86xNY14qrm1zHV/SEP+Sa3yJc5aDXEyTVBZ8IpkcXLpy7tN2fUfRJOM+SJUuWLFnW+Bu7PUzKc5cllAAAAABJRU5ErkJggg==) 0 0, auto;}

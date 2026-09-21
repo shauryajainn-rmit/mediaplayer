@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VideoPlayerXP</title>
+
     <!-- DESIGN RATIONALE: I took inspiration from the Windows XP design, as I was looking for websites for inspiration that solely focused on video players, 
      or had audio-visual content and I was drawn to the familiarity of the old Windows design (https://mitchivin.com) , which I thought
       would be a fun and nostalgic theme for the website. I wanted to recreate the original website in a more colourful and visually happening way, 
@@ -11,14 +12,19 @@
        and a drag and drop effect for the XP Video Player window, which I thought would be fun to add, as if it was an actual window on your desktop.
        I also added a custom cursor, which I thought would add playful and witty character to the website. I chose the fonts Times New Roman and Roboto Mono, 
        which are very adding to the y2k theme. Overall, I think the "retro = fun" idea makes 
-       any simple website, like this one, a lot more interesting to use.
+       any simple website, like this one, a lot more interesting to use. I changed the video to an artwork from Rhizome Artbase: Forecast, 2011 by Anne de Vries,
+       which I thought would be a really good fit for theme of the website.
 
+  SOURCES AND AI DISCLOSURE
+   References: MDN docs for HTMLMediaElement, Pointer Events, p5.js, playhtml.fun(for inspiration), 
+   w3schools, codepen.io
+   Icons: Icons8. Fonts: Google Fonts
+  Claude AI was partially used to fix coding errors with suggestions.
 
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=Instrument+Serif:ital@0;1&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="reset.css" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">    <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
@@ -41,7 +47,6 @@
         <li><a href="#">Playlists</a></li>
       </ul>
     </nav>
-<div id="mouse-cd" aria-hidden="true"></div>
     <!-- menu -->
     <main class="container">
       <div class="viewer">
@@ -69,10 +74,10 @@
               <div class="stage">
 
  <video id="custom-video-player" playsinline preload="metadata">
- <source
-  src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4"
- type="video/mp4"
- />
+<source
+  src="https://file.garden/arChdgyluAlivpAx/Anne%20de%20Vries%2C%20Forecast%2C%202011.mp4"
+  type="video/mp4"
+/>
                 </video>
               </div>
 
@@ -148,26 +153,26 @@
               </div>
             </div>
           </div>
-
           <!--
             the status bar below is a text feedback for whatever is happening in the player, like pause, play and window was dragged.
           -->
           <p id="status" class="statusbar" role="status" aria-live="polite">
-            Ready? Press play or hit Space.
-          </p>
+            Ready? Press play or hit spacebar. p.s. drag the window!
+         </p>
+          
         </section>
-
       </div>
-
-
+    </main>
     <!-- footer -->
     <footer>
       <p>&copy; 2026 Media Player Website. All rights reserved.</p>
       <p>
+        Video: <a href="https://video.rhizome.org/w/bce2YMKzQCqyQ7EGkJCfi7">Anne de Vries, Forecast, 2011</a> (Rhizome ArtBase),
         <a href="https://icons8.com/icon/59862/play">Play</a> icon by
         <a href="https://icons8.com">Icons8</a>,
         <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
         <a href="https://icons8.com">Icons8</a>,
+        <a href="https://commons.wikimedia.org/wiki/File:Audio_Compact_Disc.png">CD Icon</a> from Public domain, via Wikimedia Commons,
         <a href="https://www.rw-designer.com/cursor-set/de-todo-un-poco-2-by-mei" title="Get free cursors for your web.">Cursor</a> from <a href="https://www.rw-designer.com/">RW Designer</a>
       </p>
     </footer>
