@@ -54,7 +54,7 @@ header,
 nav,
 .container,
 footer {
-  width: min(100% - 2rem, 72rem);
+  width: min(100% - 2rem, 48rem);
   margin-inline: auto;
 }
 
@@ -185,8 +185,9 @@ nav a:focus-visible {
   box-shadow: 2px 3px 10px rgb(0 0 0 / 0.3);
 }
 
+
 .player-window {
-  width: min(100%, 72rem);
+  width: min(100%, 40rem);
   margin-inline: auto;
   z-index: 1;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -230,6 +231,7 @@ nav a:focus-visible {
 .window-body {
   padding: 8px;
 }
+
 
 .win-btn,
 .custom-controls button,
@@ -309,18 +311,11 @@ nav a:focus-visible {
 }
 
 .custom-controls .skip-btn {
-  width: 52px;
-  min-width: 52px;
+  width: auto;
+  min-width: 4.5rem;
   height: 44px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-}
-
-.custom-controls .skip-btn img {
-  width: 24px;
-  height: 24px;
-  display: block;
+  padding: 0 0.6rem;
+  white-space: nowrap;
 }
 
 #time-display {
