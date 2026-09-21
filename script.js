@@ -41,7 +41,23 @@ const PAUSE_ICON = "https://img.icons8.com/ios-glyphs/30/pause--v1.png";
 function say(message) {
   statusEl.textContent = message;
 }
+/* ---------- Cursor ---------- */
 
+document.addEventListener("pointerdown", () => {
+  document.body.classList.add("is-clicking");
+});
+
+document.addEventListener("pointerup", () => {
+  document.body.classList.remove("is-clicking");
+});
+
+document.addEventListener("pointercancel", () => {
+  document.body.classList.remove("is-clicking");
+});
+
+document.addEventListener("pointerleave", () => {
+  document.body.classList.remove("is-clicking");
+});
 /* ---------- Play / pause ---------- */
 
 function togglePlayPause() {

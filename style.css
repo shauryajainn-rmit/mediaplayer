@@ -572,11 +572,27 @@ footer a {
     animation: none;
   }
 }
-
-* {
-  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, auto !important;
+body {
+  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, auto;
 }
 
-a, button, input[type="range"], .progress-bar, #custom-video-player {
-  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, pointer !important;
+button,
+a,
+input[type="range"],
+.progress-bar,
+#custom-video-player,
+video,
+svg,
+[role="button"] {
+  cursor: url("Interface-Essential-Cursor--Streamline-Pixel.svg") 7 2, pointer;
+}
+
+body.is-clicking,
+body.is-clicking *,
+body.is-clicking button,
+body.is-clicking a,
+body.is-clicking input[type="range"],
+body.is-clicking .progress-bar,
+body.is-clicking #custom-video-player {
+  cursor: url("Interface-Essential-Cursor-Click-Point--Streamline-Pixel.svg") 7 2, pointer !important;
 }
